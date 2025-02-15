@@ -2,7 +2,7 @@ package com.bookstore.bookstore.controller;
 
 import com.bookstore.bookstore.CreditCard;
 import com.bookstore.bookstore.repository.CreditCardRepository;
-import com.bookstore.bookstore.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +12,17 @@ import java.util.List;
 @RequestMapping("/api/creditcards")
 public class CreditCardController {
 
-    private CreditCardRepository creditCardRepository;
-    private UserRepository userRepository;
+    private final CreditCardRepository creditCardRepository;
 
-    @GetMapping("/user/{username}")
-    public ResponseEntity<List<CreditCard>> getCreditCardsByUsername(@PathVariable String username) {
-        List<CreditCard> creditCards = creditCardRepository.findByUserUserName(username);
+    @Autowired
+    public CreditCardController(CreditCardRepository creditCardRepository) {
+        this.creditCardRepository = creditCardRepository;
+    }
+
+    @GetMapping("/user/{userName}")
+    public ResponseEntity<List<CreditCard>> getCreditCardsByUsername(@PathVariable String userName) {
+        System.out.println("Finding credit cards for user: " + userName);
+        List<CreditCard> creditCards = creditCardRepository.findByUser_UserName(userName);
         return ResponseEntity.ok(creditCards);
     }
 }

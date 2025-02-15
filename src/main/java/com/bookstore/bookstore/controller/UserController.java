@@ -26,11 +26,9 @@ public class UserController {
     @GetMapping("/user/{username}")
     public ResponseEntity<User> getUserByUserName(@PathVariable String username) {
         Optional<User> user = userRepository.findByUserName(username);
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return userRepository.findByUserName(username)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 }

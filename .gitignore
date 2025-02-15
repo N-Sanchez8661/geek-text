@@ -35,3 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+# Ignore Maven/Gradle build directories
+target/
+build/
+
+# Ignore compiled Java files
+*.class
+
+# Ignore log files
+*.log

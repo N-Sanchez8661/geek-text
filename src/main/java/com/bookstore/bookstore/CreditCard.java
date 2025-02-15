@@ -1,7 +1,6 @@
 package com.bookstore.bookstore;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
 
 @Entity
@@ -11,6 +10,7 @@ public class CreditCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cardId;
+
     public Long getCardId() {
         return cardId;
     }
@@ -47,7 +47,7 @@ public class CreditCard {
     }
 
     @ManyToOne
-    @JoinColumn(name = "userID", nullable = false)
+    @JoinColumn(name = "username", referencedColumnName = "userName", nullable = false)
     private User user;
     public User getUser() {
         return user;

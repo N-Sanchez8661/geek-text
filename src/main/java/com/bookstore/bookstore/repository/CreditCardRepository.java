@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CreditCardRepository extends JpaRepository<CreditCard, Long> {
-    List<CreditCard> findByUser(User user);
+    List<CreditCard> findByUserUserName(String username);
 }

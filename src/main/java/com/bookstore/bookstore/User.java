@@ -1,7 +1,10 @@
 package com.bookstore.bookstore;
 
 import jakarta.persistence.*;
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "User")
@@ -62,9 +65,8 @@ public class User {
         return address;
     }
 
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CreditCard> creditCardList;
-
 
     public User() {}
 
@@ -76,6 +78,7 @@ public class User {
         this.email = email;
         this.address = address;
     }
+
 
 }
 

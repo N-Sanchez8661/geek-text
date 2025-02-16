@@ -13,7 +13,45 @@ java {
 	}
 }
 
+repositories {plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.4' // Updated Spring Boot version
+    id 'io.spring.dependency-management' version '1.1.0' // Updated Dependency Management version
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+apply plugin: 'io.spring.dependency-management' // Apply the dependency management plugin
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:3.2.4" // Updated Spring Boot version in BOM
+    }
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21) // Use Java 21
+    }
+}
+
 repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.modelmapper:modelmapper:3.1.1' // Or latest version
+    runtimeOnly 'com.mysql:mysql-connector-j'  // MySQL Connector for Spring Boot 3
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
 	mavenCentral()
 }
 

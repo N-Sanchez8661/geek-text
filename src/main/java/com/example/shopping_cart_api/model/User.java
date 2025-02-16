@@ -1,7 +1,6 @@
 package com.example.shopping_cart_api.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -12,8 +11,18 @@ public class User {
     @Column(name = "user_id")
     private Long userId;
 
-    @OneToMany(mappedBy = "user")
-    private List<ShoppingCart> shoppingCarts;
+    @OneToOne(mappedBy = "user")
+    private ShoppingCart shoppingCart;
 
-    // ... getters and setters ...
+    public Long getUserId() { // Getter for userId (ESSENTIAL)
+        return userId;
+    }
+
+    public ShoppingCart getShoppingCart() { 
+        return shoppingCart;
+    }
+
+    public void setShoppingCart(ShoppingCart shoppingCart) {
+        this.shoppingCart = shoppingCart;
+    }
 }

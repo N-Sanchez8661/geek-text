@@ -38,24 +38,7 @@ public class ShoppingCartController {
         return subtotal;
     }
 
-    @PostMapping("/{userId}/cart")
-    public void addToCart(@PathVariable Long userId, @RequestParam Long bookId, @RequestParam int quantity) {
-        // Implementation for adding to cart
-        User user = userRepository.findById(userId).orElse(null);
-        Book book = bookRepository.findById(bookId).orElse(null);
-        ShoppingCart existingItem = shoppingCartRepository.findByUserAndBook(user, book);
-
-        if (existingItem != null) {
-            existingItem.setQuantity(existingItem.getQuantity() + quantity);
-            shoppingCartRepository.save(existingItem);
-        } else {
-            ShoppingCart newItem = new ShoppingCart();
-            newItem.setUser(user);
-            newItem.setBook(book);
-            newItem.setQuantity(quantity);
-            shoppingCartRepository.save(newItem);
-        }
-    }
+   
 
     @GetMapping("/{userId}/cart/items")
     public List<Book> getCartItems(@PathVariable Long userId) {
@@ -70,12 +53,5 @@ public class ShoppingCartController {
         return books;
     }
 
-    @DeleteMapping("/{userId}/cart")
-    public void deleteFromCart(@PathVariable Long userId, @RequestParam Long bookId) {
-        // Implementation for deleting from cart
-        User user = userRepository.findById(userId).orElse(null);
-        Book book = bookRepository.findById(bookId).orElse(null);
-        ShoppingCart item = shoppingCartRepository.findByUserAndBook(user, book);
-        shoppingCartRepository.delete(item);
-    }
+
 }

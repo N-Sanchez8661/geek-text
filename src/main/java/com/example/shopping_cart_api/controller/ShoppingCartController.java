@@ -22,7 +22,7 @@ public class ShoppingCartController {
         }
 
         if (shoppingCart.getBook() == null) {
-            return ResponseEntity.ok(0.0); /
+            return ResponseEntity.ok(0.0); 
         }
 
         double subtotal = shoppingCart.getBook().getPrice(); 

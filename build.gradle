@@ -1,38 +1,23 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.4.2'
-	id 'io.spring.dependency-management' version '1.1.7'
-}
-
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-
-java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-repositories {plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.4' // Updated Spring Boot version
-    id 'io.spring.dependency-management' version '1.1.0' // Updated Dependency Management version
+    id 'org.springframework.boot' version '3.2.4' // Or latest 3.x.x version
+    id 'io.spring.dependency-management' version '1.1.0' // Or latest 1.x.x version
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
-apply plugin: 'io.spring.dependency-management' // Apply the dependency management plugin
+apply plugin: 'io.spring.dependency-management'
 
 dependencyManagement {
     imports {
-        mavenBom "org.springframework.boot:spring-boot-starter-parent:3.2.4" // Updated Spring Boot version in BOM
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:3.2.4" // Match Spring Boot version above
     }
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21) // Use Java 21
+        languageVersion = JavaLanguageVersion.of(21) // Or your desired Java version (17+)
     }
 }
 
@@ -44,26 +29,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.modelmapper:modelmapper:3.1.1' // Or latest version
-    runtimeOnly 'com.mysql:mysql-connector-j'  // MySQL Connector for Spring Boot 3
+    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL Connector
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
-}
-	mavenCentral()
-}
-
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.modelmapper:modelmapper:3.1.1'
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
 }

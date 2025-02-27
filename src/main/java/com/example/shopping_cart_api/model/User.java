@@ -3,22 +3,26 @@ package com.example.shopping_cart_api.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private long userId;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne
     private ShoppingCart shoppingCart;
 
-    public Long getUserId() { // Getter for userId (ESSENTIAL)
+    public long getUserId() {
         return userId;
     }
 
-    public ShoppingCart getShoppingCart() { 
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
 

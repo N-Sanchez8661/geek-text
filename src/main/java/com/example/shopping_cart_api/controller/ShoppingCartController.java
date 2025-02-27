@@ -1,32 +1,29 @@
 package com.example.shopping_cart_api.controller;
 
-import com.example.shopping_cart_api.model.ShoppingCart;
-import com.example.shopping_cart_api.repository.ShoppingCartRepository;
+import com.example.shopping_cart_api.model.Book;
+import com.example.shopping_cart_api.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/shopping-cart")
+@RequestMapping("/shopping-cart") // Remove cartId from the path
 public class ShoppingCartController {
 
     @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
+    private ShoppingCartService shoppingCartService;
 
-    @GetMapping("/subtotal/{user_id}")
-    public ResponseEntity<Double> getSubtotal(@PathVariable Long user_id) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(user_id);
+    @GetMapping("/books/{userId}") // Use userId in the path
+    public ResponseEntity<List<Book>> getBooks(@PathVariable long userId) {
+        List<Book> books = shoppingCartService.getBooksInCart(userId);
+        return ResponseEntity.ok(books);
+    }
 
-        if (shoppingCart == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        if (shoppingCart.getBook() == null) {
-            return ResponseEntity.ok(0.0); 
-        }
-
-        double subtotal = shoppingCart.getBook().getPrice(); 
-
+    @GetMapping("/subtotal/{userId}") // Use userId in the path
+    public ResponseEntity<Double> getSubtotal(@PathVariable long userId) {
+        double subtotal = shoppingCartService.getSubtotal(userId);
         return ResponseEntity.ok(subtotal);
     }
 }

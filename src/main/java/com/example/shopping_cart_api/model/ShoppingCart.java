@@ -1,36 +1,20 @@
 package com.example.shopping_cart_api.model;
 
 import jakarta.persistence.*;
+import java.util.List;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "shopping_cart")
 public class ShoppingCart {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cart_id")
-    private Long cartId;
-
-    @Column(name = "user_id")
+    @Column(name = "user_id") // userId is now the primary key
     private Long userId;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
-
-    @OneToOne
-    @JoinColumn(name = "book_id")
-    private Book book;
-
-    // Getters and setters for ALL fields:
-
-    public Long getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(Long cartId) {
-        this.cartId = cartId;
-    }
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id") // user_id is the foreign key in the books table
+    private List<Book> books = new ArrayList<>();
 
     public Long getUserId() {
         return userId;
@@ -40,19 +24,12 @@ public class ShoppingCart {
         this.userId = userId;
     }
 
-    public User getUser() {
-        return user;
+    public List<Book> getBooks() {
+        return books;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
-    public Book getBook() {
-        return book;
-    }
-
-    public void setBook(Book book) {
-        this.book = book;
-    }
-}
+}//end entity

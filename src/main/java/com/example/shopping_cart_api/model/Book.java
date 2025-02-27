@@ -3,28 +3,31 @@ package com.example.shopping_cart_api.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "book")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
-    private Long bookId;
+    private long bookId;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "price")
+    @Column(name = "price", nullable = false)
     private double price;
 
-    public Long getBookId() {
+    @Column(name = "user_id") // Add this field
+    private long userId;
+
+    // Constructors, getters, setters
+
+    public long getBookId() {
         return bookId;
     }
-  
-    public void setBookId(Long bookId) {
+
+    public void setBookId(long bookId) {
         this.bookId = bookId;
     }
-  
+
     public String getTitle() {
         return title;
     }
@@ -39,5 +42,13 @@ public class Book {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public long getUserId() { // Add getter
+        return userId;
+    }
+
+    public void setUserId(long userId) { // Add setter
+        this.userId = userId;
     }
 }

@@ -1,23 +1,15 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.4' // Or latest 3.x.x version
-    id 'io.spring.dependency-management' version '1.1.0' // Or latest 1.x.x version
+    id 'org.springframework.boot' version '3.2.4'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
-apply plugin: 'io.spring.dependency-management'
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.boot:spring-boot-starter-parent:3.2.4" // Match Spring Boot version above
-    }
-}
-
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21) // Or your desired Java version (17+)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -25,12 +17,21 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-starter-parent:3.2.4"
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.modelmapper:modelmapper:3.1.1' // Or latest version
-    runtimeOnly 'com.mysql:mysql-connector-j' // MySQL Connector
+    implementation 'org.modelmapper:modelmapper:3.1.1'
+    runtimeOnly 'com.mysql:mysql-connector-j:8.0.33'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 

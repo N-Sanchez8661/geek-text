@@ -1,5 +1,6 @@
 package com.bookstore.bookstore;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import java.util.Date;
 
@@ -9,27 +10,27 @@ public class CreditCard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cardId;
+    private Long creditCardId;
 
     @Column(nullable = false, length = 16)
     private String cardNumber;
 
     @Column(name = "expiryDate", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/yy")
     private Date expiryDate;
 
-    @Column(nullable = false, unique = true)
-    private Integer CVV;
+    @Column(nullable = false)
+    private String cvv;
 
     @ManyToOne
-    @JoinColumn(name = "userName", referencedColumnName = "userName", nullable = false)
+    @JoinColumn(name = "userId", referencedColumnName = "userId", nullable = false)
     private User user;
 
-    public Long getCardId() {
-        return cardId;
+    public Long getCreditCardId() {
+        return creditCardId;
     }
-    public void setCardId(Long cardId) {
-        this.cardId = cardId;
+    public void setCreditCardId(Long creditCardId) {
+        this.creditCardId = creditCardId;
     }
     public String getCardNumber() {
         return cardNumber;
@@ -43,11 +44,11 @@ public class CreditCard {
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
     }
-    public Integer getCVV() {
-        return CVV;
+    public String getCvv() {
+        return cvv;
     }
-    public void setCVV(Integer CVV) {
-        this.CVV = CVV;
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
     }
     public User getUser() {
         return user;
@@ -59,10 +60,10 @@ public class CreditCard {
 
     public CreditCard() {}
 
-    public CreditCard(String cardNumber, Date expiryDate, Integer CVV, User user) {
+    public CreditCard(String cardNumber, Date expiryDate, String cvv, User user) {
         this.cardNumber = cardNumber;
         this.expiryDate = expiryDate;
-        this.CVV = CVV;
+        this.cvv = cvv;
         this.user = user;
     }
 

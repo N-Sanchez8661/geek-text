@@ -1,8 +1,7 @@
-package com.bookstore.bookstore;
+package com.bookstore.bookstore.model;
 
 import jakarta.persistence.*;
 import java.util.List;
-
 
 @Entity
 @Table(name = "User")

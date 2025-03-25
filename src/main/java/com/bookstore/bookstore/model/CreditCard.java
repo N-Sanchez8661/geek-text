@@ -1,4 +1,4 @@
-package com.bookstore.bookstore;
+package com.bookstore.bookstore.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
 package com.bookstore.bookstore.controller;
 
-import com.bookstore.bookstore.User;
+import com.bookstore.bookstore.model.User;
 import com.bookstore.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,22 +45,18 @@ public class UserController {
 
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-
-            // Update username safely
             if (updatedUser.getUsername() != null && !updatedUser.getUsername().equals(user.getUsername())) {
-                // Check if new username already exists
+                //Check if new username already exists
                 if (userRepository.findByUsername(updatedUser.getUsername()).isPresent()) {
-                    return ResponseEntity.badRequest().body(null);  // Username already taken
+                    return ResponseEntity.badRequest().body(null);  //Username already taken
                 }
                 user.setUsername(updatedUser.getUsername());
             }
-            // Update other fields if provided
+
             if (updatedUser.getPassword() != null) user.setPassword(updatedUser.getPassword());
             if (updatedUser.getHomeAddress() != null) user.setHomeAddress(updatedUser.getHomeAddress());
             if (updatedUser.getName() != null) user.setName(updatedUser.getName());
 
-
-            // Save updated user
             userRepository.save(user);
 
             return ResponseEntity.ok(user);

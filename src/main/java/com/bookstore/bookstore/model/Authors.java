@@ -1,6 +1,4 @@
-package com.bookstore.rest.Models;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
+package com.bookstore.bookstore.model;
 
 import jakarta.persistence.*;
 

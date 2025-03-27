@@ -1,4 +1,4 @@
-package com.bookstore.rest.Models;
+package com.bookstore.bookstore.model;
 
 import jakarta.persistence.*;
 
@@ -110,5 +110,8 @@ public class Books {
     public String getPublisher() { return Publisher; }
 
     public void setPublisher(String publisher) {Publisher = publisher; }
+
+    public Books() {}
+
 
 }

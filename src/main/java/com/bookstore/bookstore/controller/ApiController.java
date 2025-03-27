@@ -1,9 +1,9 @@
-package com.bookstore.rest.Controller;
+package com.bookstore.bookstore.controller;
 
-import com.bookstore.rest.Models.Authors;
-import com.bookstore.rest.Models.Books;
-import com.bookstore.rest.Repo.AuthorRepository;
-import com.bookstore.rest.Repo.BookRepository;
+import com.bookstore.bookstore.model.Authors;
+import com.bookstore.bookstore.model.Books;
+import com.bookstore.bookstore.repository.AuthorRepository;
+import com.bookstore.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

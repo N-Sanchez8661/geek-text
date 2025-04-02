@@ -1,7 +1,6 @@
 package com.alepo.geek_test.service.impl;
 
 import com.alepo.geek_test.dto.BookDTO;
-import com.alepo.geek_test.entity.Book;
 import com.alepo.geek_test.repository.BookRepository;
 import com.alepo.geek_test.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;

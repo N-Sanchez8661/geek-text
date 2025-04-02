@@ -1,7 +1,6 @@
 package com.alepo.geek_test.service;
 
 import com.alepo.geek_test.dto.BookDTO;
-import com.alepo.geek_test.entity.Book;
 
 import java.util.List;
 

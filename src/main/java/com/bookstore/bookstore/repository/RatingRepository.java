@@ -1,11 +1,9 @@
-package com.geektext.repositories;
+package com.bookstore.bookstore.repository;
 
-import com.geektext.models.Rating;
+import com.bookstore.bookstore.model.Rating;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import java.util.List;
 
 @Repository
 public interface RatingRepository extends JpaRepository<Rating, Long> {
-    List<Rating> findByBookBookId(Long bookId);
 }

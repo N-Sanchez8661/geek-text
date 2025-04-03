@@ -98,16 +98,12 @@ public class Books {
     }
     public void setDescription(String description) {this.description = description;}
 
-    /*public Authors getAuthor() {
+    public Authors getAuthor() {
         return author;
     }
-     */
-    /*
     public void setAuthor(Authors author) {
         this.author = author;
     }
-     */
-
     public String getPublisher() { return publisher; }
     public void setPublisher(String publisher) {this.publisher = publisher; }
 

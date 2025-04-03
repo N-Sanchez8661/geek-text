@@ -1,4 +1,4 @@
-package com.alepo.geek_test.model;
+package com.bookstore.bookstore.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -10,6 +10,7 @@ import lombok.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "books")
 public class Books {
 
     @Id
@@ -22,7 +23,7 @@ public class Books {
 
     @ManyToOne
     @JoinColumn(name = "AuthorID" , nullable = false)
-    //private Authors author;
+    private Authors author;
 
     @Column(nullable = false , length = 50)
     private String genre;

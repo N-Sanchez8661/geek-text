@@ -1,7 +1,7 @@
-package com.alepo.geek_test.controller;
+package com.bookstore.bookstore.controller;
 
-import com.alepo.geek_test.model.Books;
-import com.alepo.geek_test.repository.BookRepository;
+import com.bookstore.bookstore.model.Books;
+import com.bookstore.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;

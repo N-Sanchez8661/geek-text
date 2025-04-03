@@ -1,13 +1,13 @@
-package com.alepo.geek_test;
+package com.bookstore.bookstore;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GeekTestApplication {
+public class BookstoreApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GeekTestApplication.class, args);
+		SpringApplication.run(BookstoreApplication.class, args);
 	}
 
 }

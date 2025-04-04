@@ -73,7 +73,6 @@ public class Books {
     }
     public void setPublishedYear(int publishedYear) {
         this.publishedYear = publishedYear;
->>>>>>> book-browsing-sorting
     }
 
     public String getISBN() {

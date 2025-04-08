@@ -3,6 +3,8 @@ package com.bookstore.bookstore.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -124,11 +126,10 @@ public class Books {
     public void setPublisher(String publisher) {this.publisher = publisher; }
 
     @OneToMany(mappedBy = "book" , cascade = CascadeType.ALL , orphanRemoval = true)
+    @JsonManagedReference
     private List<Rating> ratings = new ArrayList<>();
     public List<Rating> getRatings() {
         return ratings;
     }
-    public void setRatings(List<Rating> ratings) {
-        this.ratings = ratings;
-    }
+
 }

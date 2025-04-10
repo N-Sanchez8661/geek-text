@@ -1,6 +1,5 @@
 package com.bookstore.bookstore.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.bookstore.bookstore.model.Books;
 import com.bookstore.bookstore.repository.BookRepository;
+import com.bookstore.bookstore.repository.RatingRepository;
 
 @RestController
 @RequestMapping("/book")
@@ -28,6 +28,7 @@ public class BookController {
 
     @Autowired
     private BookRepository bookRepository;
+    private RatingRepository ratingRepository;
 
     @PostMapping("/add")
     public String addBook(@RequestBody Books book) {
@@ -73,12 +74,8 @@ public class BookController {
     }
 
     @GetMapping("/rating")
-    public List<Books> getBooksByRating(@RequestParam Integer rating) {
-        
-        List<Books> list = new ArrayList<>();
-
-        return bookRepository.findAll(Sort.by(Sort.Direction.DESC, "copiesSold"));
-
+    public List<Books> getBooksByRating(@RequestParam Double rating) {
+        return ratingRepository.findBooksByMinAverageRatingSorted(rating);
     }
 
 }

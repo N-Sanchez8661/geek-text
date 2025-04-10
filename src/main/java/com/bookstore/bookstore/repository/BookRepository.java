@@ -15,6 +15,4 @@ public interface BookRepository extends JpaRepository<Books, Long> {
     @Query(value = "SELECT * FROM books WHERE AuthorID = :authorId", nativeQuery = true)
     List<Books> findByAuthorId(@Param("authorId") int authorId);
 
-    @Query("SELECT b FROM Books b JOIN b.ratings r GROUP BY b HAVING AVG(r.score) >= :minRating ORDER BY AVG(r.score) DESC")
-    List<Books> findBooksByAverageRating(@Param("minRating") int minRating);
 }

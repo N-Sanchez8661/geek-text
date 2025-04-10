@@ -1,5 +1,6 @@
 package com.bookstore.bookstore.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,11 @@ public class BookController {
 
     @GetMapping("/rating")
     public List<Books> getBooksByRating(@RequestParam Integer rating) {
-        return bookRepository.findBooksByAverageRating(rating);
+        
+        List<Books> list = new ArrayList<>();
+
+        return bookRepository.findAll(Sort.by(Sort.Direction.DESC, "copiesSold"));
+
     }
 
 }

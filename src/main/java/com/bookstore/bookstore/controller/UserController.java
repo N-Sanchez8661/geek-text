@@ -59,7 +59,7 @@ public class UserController {
 
             userRepository.save(user);
 
-            return ResponseEntity.ok(user);
+            return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }

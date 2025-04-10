@@ -3,7 +3,6 @@ package com.bookstore.bookstore.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +27,7 @@ public class BookController {
 
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
     private RatingRepository ratingRepository;
 
     @PostMapping("/add")
@@ -52,25 +52,19 @@ public class BookController {
 
     @GetMapping("/genre")
     public List<Books> getBooksByGenre(@RequestParam String genre) {
-
-        Books book = new Books();
-        book.setGenre(genre);
-        Example<Books> example = Example.of(book);
-
-        return bookRepository.findAll(example, Sort.by(Sort.Direction.DESC, "copiesSold"));
+        return bookRepository.findByGenre(genre);
     }
 
     @PatchMapping("/apply-discount")
-    public ResponseEntity<Void> applyDiscount(@RequestParam String publisher, @RequestParam Double discount) {
-        List<Books> list = bookRepository.findAll();
-        for (Books b : list) {
-            if (b.getPublisher().equalsIgnoreCase(publisher)) {
-                double newPrice = b.getPrice() * discount;
-                b.setPrice(newPrice);
-                bookRepository.save(b);
-            }
+    public ResponseEntity<String> applyDiscount(@RequestParam String publisher, @RequestParam Double discount) {
+            
+        int updatedCount = bookRepository.updatePriceByPublisher(publisher, discount);
+    
+        if (updatedCount > 0) {
+            return ResponseEntity.ok("Discount applied successfully to " + updatedCount + " books.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No books found for the given publisher.");
         }
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/rating")

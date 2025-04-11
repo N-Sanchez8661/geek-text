@@ -1,54 +1,135 @@
-package com.example.shopping_cart_api.model;
+package com.example.shopping_cart_api.model; // Keep your package name
 
 import jakarta.persistence.*;
 
 @Entity
-public class Book {
+@Table(name = "books")
+public class Book { // Keep your class name as Book
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "bookId")
     private long bookId;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(nullable = false, length = 255)
+    private String Title;
 
-    @Column(name = "price", nullable = false)
-    private double price;
+    @ManyToOne
+    @JoinColumn(name = "AuthorID", nullable = false)
+    private Authors author;
 
-    @Column(name = "user_id") // Add this field
-    private long userId;
+    @Column(nullable = false, length = 50)
+    private String Genre;
 
-    // Constructors, getters, setters
+    @Column(nullable = false)
+    private int PublishedYear;
 
-    public long getBookId() {
+    @Column(nullable = false, length = 20)
+    private String ISBN;
+
+    @Column(nullable = false, precision = 10)
+    private double Price;
+
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int CopiesSold;
+
+    @Column
+    private String Description;
+
+    @Column
+    private String Publisher;
+
+    // Constructors (default and parameterized)
+    public Book() {}
+
+    public Book(String title,  Authors author, String genre, int publishedYear, String isbn, double price, int copiesSold, String description, String publisher) {
+        this.Title = title;
+        this.author = author;
+        this.Genre = genre;
+        this.PublishedYear = publishedYear;
+        this.ISBN = isbn;
+        this.Price = price;
+        this.CopiesSold = copiesSold;
+        this.Description = description;
+        this.Publisher = publisher;
+    }
+
+    public long getbookId() {
         return bookId;
     }
 
-    public void setBookId(long bookId) {
+    public void setbookId(long bookId) {
         this.bookId = bookId;
     }
-
     public String getTitle() {
-        return title;
+        return Title;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        Title = title;
+    }
+
+    public Authors getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Authors author) {
+        this.author = author;
+    }
+
+    public String getGenre() {
+        return Genre;
+    }
+
+    public void setGenre(String genre) {
+        Genre = genre;
+    }
+
+    public int getPublishedYear() {
+        return PublishedYear;
+    }
+
+    public void setPublishedYear(int publishedYear) {
+        PublishedYear = publishedYear;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
     }
 
     public double getPrice() {
-        return price;
+        return Price;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        Price = price;
     }
 
-    public long getUserId() { // Add getter
-        return userId;
+    public int getCopiesSold() {
+        return CopiesSold;
     }
 
-    public void setUserId(long userId) { // Add setter
-        this.userId = userId;
+    public void setCopiesSold(int copiesSold) {
+        CopiesSold = copiesSold;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public String getPublisher() {
+        return Publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        Publisher = publisher;
     }
 }

@@ -1,121 +1,135 @@
-package com.bookstore.bookstore.model;
+package com.bookstore.bookstore.model; // Keep your package name
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.*;
 
-@Data
-@Getter
-@Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "books")
 public class Books {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BookID")
-    private long bookID;
+    @Column(name = "bookId")
+    private long bookId;
 
-    @Column(nullable = false , length = 255)
-    private String title;
+    @Column(nullable = false, length = 255)
+    private String Title;
 
     @ManyToOne
-    @JoinColumn(name = "AuthorID" , nullable = false)
+    @JoinColumn(name = "AuthorID", nullable = false)
     private Authors author;
 
-    @Column(nullable = false , length = 50)
-    private String genre;
+    @Column(nullable = false, length = 50)
+    private String Genre;
 
     @Column(nullable = false)
-    private int publishedYear;
+    private int PublishedYear;
 
-    @Column(nullable = false , length = 20)
+    @Column(nullable = false, length = 20)
     private String ISBN;
 
-    @Column(nullable = false , precision = 10)
-    private double price;
+    @Column(nullable = false, precision = 10)
+    private double Price;
 
-    @Column(nullable = false , columnDefinition = "INTEGER DEFAULT 0")
-    private int copiesSold;
-
-    @Column
-    private String description;
+    @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
+    private int CopiesSold;
 
     @Column
-    private String publisher;
+    private String Description;
 
+    @Column
+    private String Publisher;
 
-    public long getBookID() {
-        return bookID;
+    // Constructors (default and parameterized)
+    public Books() {}
+
+    public Books(String title, Authors author, String genre, int publishedYear, String isbn, double price, int copiesSold, String description, String publisher) {
+        this.Title = title;
+        this.author = author;
+        this.Genre = genre;
+        this.PublishedYear = publishedYear;
+        this.ISBN = isbn;
+        this.Price = price;
+        this.CopiesSold = copiesSold;
+        this.Description = description;
+        this.Publisher = publisher;
     }
-    public void setBookID(long bookID) {
-        this.bookID = bookID;
+
+    public long getBookId() {
+        return bookId;
     }
 
+    public void setBookId(long bookId) {
+        this.bookId = bookId;
+    }
     public String getTitle() {
-        return title;
+        return Title;
     }
+
     public void setTitle(String title) {
-        this.title = title;
+        Title = title;
+    }
+
+    public Authors getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Authors author) {
+        this.author = author;
     }
 
     public String getGenre() {
-        return genre;
+        return Genre;
     }
+
     public void setGenre(String genre) {
-        this.genre = genre;
+        Genre = genre;
     }
 
     public int getPublishedYear() {
-        return publishedYear;
+        return PublishedYear;
     }
+
     public void setPublishedYear(int publishedYear) {
-        this.publishedYear = publishedYear;
+        PublishedYear = publishedYear;
     }
 
     public String getISBN() {
         return ISBN;
     }
+
     public void setISBN(String ISBN) {
         this.ISBN = ISBN;
     }
 
     public double getPrice() {
-        return price;
+        return Price;
     }
+
     public void setPrice(double price) {
-        this.price = price;
+        Price = price;
     }
 
     public int getCopiesSold() {
-        return copiesSold;
+        return CopiesSold;
     }
-    public void setCopiesSold(int copiesSold) {this.copiesSold = copiesSold;}
+
+    public void setCopiesSold(int copiesSold) {
+        CopiesSold = copiesSold;
+    }
 
     public String getDescription() {
-        return description;
+        return Description;
     }
-    public void setDescription(String description) {this.description = description;}
 
-    public Authors getAuthor() {
-        return author;
+    public void setDescription(String description) {
+        Description = description;
     }
-    public void setAuthor(Authors author) {
-        this.author = author;
-    }
-    public String getPublisher() { return publisher; }
-    public void setPublisher(String publisher) {this.publisher = publisher; }
 
+    public String getPublisher() {
+        return Publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        Publisher = publisher;
+    }
 }

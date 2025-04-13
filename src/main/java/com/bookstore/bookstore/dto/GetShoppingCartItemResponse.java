@@ -2,24 +2,21 @@ package com.bookstore.bookstore.dto;
 
 public class GetShoppingCartItemResponse {
 
-    //private Authors author;
     private Long cartItemId;
-    private long bookId; // Changed to long
-    private String title; // Changed to title
-    private int quantity;
+    private long bookId;
+    private String title;
     private double price;
-    private String genre; // Added genre
-    private int publishedYear; // Added publishedYear
-    private String isbn; //Added isbn
+    private String genre;
+    private int publishedYear;
+    private String isbn;
 
     // Constructors
     public GetShoppingCartItemResponse() {}
 
-    public GetShoppingCartItemResponse(Long cartItemId, long bookId, String title, int quantity, double price, String genre, int publishedYear, String isbn) {
+    public GetShoppingCartItemResponse(Long cartItemId, long bookId, String title, double price, String genre, int publishedYear, String isbn) {
         this.cartItemId = cartItemId;
         this.bookId = bookId;
         this.title = title;
-        this.quantity = quantity;
         this.price = price;
         this.genre = genre;
         this.publishedYear = publishedYear;
@@ -35,28 +32,20 @@ public class GetShoppingCartItemResponse {
         this.cartItemId = cartItemId;
     }
 
-    public long getBookId() { // Changed to long
+    public long getBookId() {
         return bookId;
     }
 
-    public void setBookId(long bookId) { // Changed to long
+    public void setBookId(long bookId) {
         this.bookId = bookId;
     }
 
-    public String getTitle() { // Changed to title
+    public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) { // Changed to title
+    public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
     }
 
     public double getPrice() {
@@ -91,14 +80,12 @@ public class GetShoppingCartItemResponse {
         this.isbn = isbn;
     }
 
-    // Optionally, you can add a toString() method for debugging
     @Override
     public String toString() {
         return "GetShoppingCartItemResponse{" +
                 "cartItemId=" + cartItemId +
                 ", bookId=" + bookId +
                 ", title='" + title + '\'' +
-                ", quantity=" + quantity +
                 ", price=" + price +
                 ", genre='" + genre + '\'' +
                 ", publishedYear=" + publishedYear +

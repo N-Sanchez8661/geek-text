@@ -3,16 +3,15 @@ package com.bookstore.bookstore.service;
 import com.bookstore.bookstore.model.Books;
 import com.bookstore.bookstore.model.ShoppingCart;
 import com.bookstore.bookstore.model.ShoppingCartItem;
+import com.bookstore.bookstore.repository.BookRepository;
 import com.bookstore.bookstore.repository.ShoppingCartItemRepository;
 import com.bookstore.bookstore.repository.ShoppingCartRepository;
-import com.bookstore.bookstore.repository.BookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,27 +46,13 @@ public class ShoppingCartServiceTest {
         Books book1 = new Books();
         book1.setBookId(1L);
         book1.setPrice(10.0);
-        book1.setTitle("Book 1");
-        book1.setGenre("Fiction");
-        book1.setPublishedYear(2023);
-        book1.setISBN("1234567890");
-        book1.setCopiesSold(100);
-        book1.setDescription("A great book");
-        book1.setPublisher("Publisher A");
 
         Books book2 = new Books();
         book2.setBookId(2L);
         book2.setPrice(20.0);
-        book2.setTitle("Book 2");
-        book2.setGenre("Non-Fiction");
-        book2.setPublishedYear(2022);
-        book2.setISBN("0987654321");
-        book2.setCopiesSold(50);
-        book2.setDescription("An interesting book");
-        book2.setPublisher("Publisher B");
 
-        cartItems.add(new ShoppingCartItem(cart, book1, 1));
-        cartItems.add(new ShoppingCartItem(cart, book2, 1));
+        cartItems.add(new ShoppingCartItem(cart, book1));
+        cartItems.add(new ShoppingCartItem(cart, book2));
         cart.setCartItems(cartItems);
     }
 
@@ -90,13 +75,6 @@ public class ShoppingCartServiceTest {
         Books newBook = new Books();
         newBook.setBookId(3L);
         newBook.setPrice(15.0);
-        newBook.setTitle("Book 3");
-        newBook.setGenre("Mystery");
-        newBook.setPublishedYear(2024);
-        newBook.setISBN("1122334455");
-        newBook.setCopiesSold(20);
-        newBook.setDescription("A thrilling book");
-        newBook.setPublisher("Publisher C");
 
         when(shoppingCartRepository.findByUserId(1L)).thenReturn(cart);
         when(bookRepository.findById(3L)).thenReturn(Optional.of(newBook));
@@ -104,6 +82,19 @@ public class ShoppingCartServiceTest {
         shoppingCartService.addBookToCart(1L, 3L);
 
         verify(shoppingCartItemRepository, times(1)).save(any(ShoppingCartItem.class));
+    }
+
+    @Test
+    void addBookToCart_shouldAllowDuplicateBooks() {
+        Books duplicateBook = cartItems.get(0).getBook(); // Same book already in cart
+
+        when(shoppingCartRepository.findByUserId(1L)).thenReturn(cart);
+        when(bookRepository.findById(1L)).thenReturn(Optional.of(duplicateBook));
+
+        shoppingCartService.addBookToCart(1L, 1L); // Add same book again
+
+        verify(shoppingCartItemRepository, times(1)).save(any(ShoppingCartItem.class));
+        assertEquals(3, cart.getCartItems().size()); // original 2 + 1 duplicate
     }
 
     @Test
@@ -154,33 +145,4 @@ public class ShoppingCartServiceTest {
 
         verify(shoppingCartItemRepository, times(0)).delete(any());
     }
-    @Test
-    void addBookToCart_defaultQuantity_isOne() {
-        Books book = new Books();
-        book.setBookId(20L);
-        book.setTitle("Quick Add");
-        book.setPrice(5.0);
-
-        when(shoppingCartRepository.findByUserId(1L)).thenReturn(cart);
-        when(bookRepository.findById(20L)).thenReturn(Optional.of(book));
-
-        shoppingCartService.addBookToCart(1L, 20L); // No quantity specified
-
-        verify(shoppingCartItemRepository).save(argThat(item ->
-                item.getBook().getBookId() == 20L && item.getQuantity() == 1));
-    }
-    @Test
-    void addBookToCart_existingBook_incrementsQuantity() {
-        when(shoppingCartRepository.findByUserId(1L)).thenReturn(cart);
-        when(bookRepository.findById(1L)).thenReturn(Optional.of(cartItems.get(0).getBook()));
-
-        int originalQty = cartItems.get(0).getQuantity();
-
-        shoppingCartService.addBookToCart(1L, 1L, 2); // Add 2 more
-
-        assertEquals(originalQty + 2, cartItems.get(0).getQuantity());
-        verify(shoppingCartItemRepository, times(1)).save(cartItems.get(0));
-    }
-
-
 }

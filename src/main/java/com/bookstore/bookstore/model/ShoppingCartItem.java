@@ -26,10 +26,10 @@ public class ShoppingCartItem {
     private int quantity = 1;
 
 
-    public ShoppingCartItem(ShoppingCart shoppingCart, Books book, int quantity) {
+    public ShoppingCartItem(ShoppingCart shoppingCart, Books book) {
         this.shoppingCart = shoppingCart;
         this.book = book;
-        this.quantity = quantity;
+       // this.quantity = quantity;
     }
 
     public ShoppingCartItem() {

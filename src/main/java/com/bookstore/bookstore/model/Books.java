@@ -1,6 +1,10 @@
-package com.bookstore.bookstore.model; // Keep your package name
+package com.bookstore.bookstore.model;
 
+import com.bookstore.bookstore.model.Authors;
 import jakarta.persistence.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Entity
 @Table(name = "books")
@@ -12,48 +16,49 @@ public class Books {
     private long bookId;
 
     @Column(nullable = false, length = 255)
-    private String Title;
+    private String title;
 
     @ManyToOne
-    @JoinColumn(name = "AuthorID", nullable = false)
+    @JoinColumn(name = "authorId", nullable = false)
     private Authors author;
 
     @Column(nullable = false, length = 50)
-    private String Genre;
+    private String genre;
 
     @Column(nullable = false)
-    private int PublishedYear;
+    private int publishedYear;
 
     @Column(nullable = false, length = 20)
-    private String ISBN;
+    private String isbn;
 
     @Column(nullable = false, precision = 10)
-    private double Price;
+    private double price;
 
     @Column(nullable = false, columnDefinition = "INTEGER DEFAULT 0")
-    private int CopiesSold;
+    private int copiesSold;
 
     @Column
-    private String Description;
+    private String description;
 
     @Column
-    private String Publisher;
+    private String publisher;
 
-    // Constructors (default and parameterized)
+    // Constructors
     public Books() {}
 
     public Books(String title, Authors author, String genre, int publishedYear, String isbn, double price, int copiesSold, String description, String publisher) {
-        this.Title = title;
+        this.title = title;
         this.author = author;
-        this.Genre = genre;
-        this.PublishedYear = publishedYear;
-        this.ISBN = isbn;
-        this.Price = price;
-        this.CopiesSold = copiesSold;
-        this.Description = description;
-        this.Publisher = publisher;
+        this.genre = genre;
+        this.publishedYear = publishedYear;
+        this.isbn = isbn;
+        this.price = price;
+        this.copiesSold = copiesSold;
+        this.description = description;
+        this.publisher = publisher;
     }
 
+    // Getters and Setters
     public long getBookId() {
         return bookId;
     }
@@ -61,12 +66,13 @@ public class Books {
     public void setBookId(long bookId) {
         this.bookId = bookId;
     }
+
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public Authors getAuthor() {
@@ -78,58 +84,66 @@ public class Books {
     }
 
     public String getGenre() {
-        return Genre;
+        return genre;
     }
 
     public void setGenre(String genre) {
-        Genre = genre;
+        this.genre = genre;
     }
 
     public int getPublishedYear() {
-        return PublishedYear;
+        return publishedYear;
     }
 
     public void setPublishedYear(int publishedYear) {
-        PublishedYear = publishedYear;
+        this.publishedYear = publishedYear;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public String getIsbn() {
+        return isbn;
     }
 
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
     }
 
     public double getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(double price) {
-        Price = price;
+        this.price = price;
     }
 
     public int getCopiesSold() {
-        return CopiesSold;
+        return copiesSold;
     }
 
     public void setCopiesSold(int copiesSold) {
-        CopiesSold = copiesSold;
+        this.copiesSold = copiesSold;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        Description = description;
+        this.description = description;
     }
 
     public String getPublisher() {
-        return Publisher;
+        return publisher;
     }
 
     public void setPublisher(String publisher) {
-        Publisher = publisher;
+        this.publisher = publisher;
+    }
+
+    public String getISBN() {
+        return isbn;
+    }
+
+    public void setISBN(String isbn) {
+        this.isbn = isbn;
     }
 }

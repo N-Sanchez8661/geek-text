@@ -1,11 +1,11 @@
-package com.example.shopping_cart_api.service;
+package com.bookstore.bookstore.service;
 
-import com.example.shopping_cart_api.model.Book;
-import com.example.shopping_cart_api.model.ShoppingCart;
-import com.example.shopping_cart_api.model.ShoppingCartItem;
-import com.example.shopping_cart_api.repository.BookRepository;
-import com.example.shopping_cart_api.repository.ShoppingCartItemRepository;
-import com.example.shopping_cart_api.repository.ShoppingCartRepository;
+import com.bookstore.bookstore.model.Books;
+import com.bookstore.bookstore.model.ShoppingCart;
+import com.bookstore.bookstore.repository.ShoppingCartRepository;
+import com.bookstore.bookstore.repository.BookRepository;
+import com.bookstore.bookstore.model.ShoppingCartItem;
+import com.bookstore.bookstore.repository.ShoppingCartItemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,10 @@ public class ShoppingCartService {
 
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
+
     @Autowired
     private BookRepository bookRepository;
+
     @Autowired
     private ShoppingCartItemRepository shoppingCartItemRepository;
 
@@ -35,14 +37,7 @@ public class ShoppingCartService {
 
     public List<ShoppingCartItem> getItemsInCart(Long userId) {
         ShoppingCart cart = shoppingCartRepository.findByUserId(userId);
-        if (cart == null) {
-            return List.of();
-        }
-        return cart.getCartItems();
-    }
-
-    public void addBookToCart(Long userId, Long bookId) {
-        addBookToCart(userId, bookId, 1);
+        return cart == null ? List.of() : cart.getCartItems();
     }
 
     @Transactional
@@ -54,11 +49,11 @@ public class ShoppingCartService {
             throw new IllegalArgumentException("No shopping cart found for user ID: " + userId);
         }
 
-        Book book = bookRepository.findById(bookId)
+        Books book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Book not found with ID: " + bookId));
 
         Optional<ShoppingCartItem> existingItemOpt = cart.getCartItems().stream()
-                .filter(item -> item.getBook().getbookId() == bookId)
+                .filter(item -> item.getBook().getBookId() == bookId)
                 .findFirst();
 
         if (existingItemOpt.isPresent()) {
@@ -80,7 +75,7 @@ public class ShoppingCartService {
         }
 
         ShoppingCartItem itemToRemove = cart.getCartItems().stream()
-                .filter(item -> item.getBook().getbookId() == bookId)
+                .filter(item -> item.getBook().getBookId() == bookId)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Book not found in cart"));
 

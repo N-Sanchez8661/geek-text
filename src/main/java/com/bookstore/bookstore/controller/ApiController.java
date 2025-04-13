@@ -38,9 +38,11 @@ public class ApiController {
 
     @GetMapping("/books/{ISBN}")
     public ResponseEntity<Books> getBookByISBN(@PathVariable String ISBN){
-        Optional<Books> book = bookRepository.findByISBN(ISBN);
-
-        return book.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        Optional<Books> findByIsbn = bookRepository.findByIsbn(ISBN);
+        if(findByIsbn.isPresent()){
+            return new ResponseEntity<>(findByIsbn.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/authors/{AuthorID}/books")

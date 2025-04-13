@@ -13,8 +13,8 @@ import com.bookstore.bookstore.model.Books;
 import jakarta.transaction.Transactional;
 
 public interface BookRepository extends JpaRepository<Books, Long> {
-    Optional<Books> findByISBN(String ISBN);
-    
+    Optional<Books> findByIsbn(String isbn);
+
     @Query(value = "SELECT * FROM books WHERE AuthorID = :authorId", nativeQuery = true)
     List<Books> findByAuthorId(@Param("authorId") int authorId);
 
@@ -25,4 +25,5 @@ public interface BookRepository extends JpaRepository<Books, Long> {
     @Transactional
     @Query("UPDATE Books b SET b.price = ROUND(b.price * :discount, 2) WHERE b.publisher = :publisher")
     int updatePriceByPublisher(@Param("publisher") String publisher, @Param("discount") double discount);
+
 }

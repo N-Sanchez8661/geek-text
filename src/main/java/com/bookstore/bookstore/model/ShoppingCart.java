@@ -74,4 +74,5 @@ public class ShoppingCart {
         this.cartItems.remove(cartItem);
         cartItem.setShoppingCart(null);
     }
+
 }

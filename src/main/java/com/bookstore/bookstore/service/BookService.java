@@ -1,17 +1,23 @@
-package com.example.shopping_cart_api.service;
+package com.bookstore.bookstore.service;
 
-import com.example.shopping_cart_api.model.Book;
-import com.example.shopping_cart_api.repository.BookRepository;
+import com.bookstore.bookstore.model.Books;
+import com.bookstore.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class BookService {
 
     @Autowired
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
-    public Book getBookByID(Long bookId) {
+    @Autowired
+    public BookService(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
+
+    public Books getBookByID(Long bookId) {
         return bookRepository.findById(bookId)
                 .orElseThrow(() -> new BookNotFoundException("Book not found with ID: " + bookId));
     }

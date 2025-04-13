@@ -3,6 +3,7 @@ package com.bookstore.bookstore.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "ShoppingCartItem")
 public class ShoppingCartItem {
@@ -24,12 +25,14 @@ public class ShoppingCartItem {
     @Column(name = "quantity", nullable = false)
     private int quantity = 1;
 
-    public ShoppingCartItem() {}
 
     public ShoppingCartItem(ShoppingCart shoppingCart, Books book, int quantity) {
         this.shoppingCart = shoppingCart;
         this.book = book;
         this.quantity = quantity;
+    }
+
+    public ShoppingCartItem() {
     }
 
     // Getters and setters for cartItemId, shoppingCart, book, and quantity

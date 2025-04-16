@@ -99,13 +99,13 @@ public class Books {
         this.publishedYear = publishedYear;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
+   // public String getIsbn() {
+    //    return isbn;
+    //}
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
-    }
+    //public void setIsbn(String isbn) {
+  //      this.isbn = isbn;
+   // }
 
     public double getPrice() {
         return price;

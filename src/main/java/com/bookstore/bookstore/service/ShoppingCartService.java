@@ -3,9 +3,11 @@ package com.bookstore.bookstore.service;
 import com.bookstore.bookstore.model.Books;
 import com.bookstore.bookstore.model.ShoppingCart;
 import com.bookstore.bookstore.model.ShoppingCartItem;
+import com.bookstore.bookstore.model.User;
 import com.bookstore.bookstore.repository.BookRepository;
 import com.bookstore.bookstore.repository.ShoppingCartItemRepository;
 import com.bookstore.bookstore.repository.ShoppingCartRepository;
+import com.bookstore.bookstore.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,9 @@ public class ShoppingCartService {
     @Autowired
     private ShoppingCartItemRepository shoppingCartItemRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     public double getSubtotal(Long userId) {
         ShoppingCart cart = shoppingCartRepository.findByUserId(userId);
         if (cart == null) {
@@ -31,7 +36,7 @@ public class ShoppingCartService {
         }
 
         return cart.getCartItems().stream()
-                .mapToDouble(item -> item.getBook().getPrice())  // Each item counts as 1 unit
+                .mapToDouble(item -> item.getBook().getPrice())
                 .sum();
     }
 
@@ -44,13 +49,17 @@ public class ShoppingCartService {
     public void addBookToCart(Long userId, Long bookId) {
         ShoppingCart cart = shoppingCartRepository.findByUserId(userId);
         if (cart == null) {
-            throw new IllegalArgumentException("No shopping cart found for user ID: " + userId);
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
+            cart = new ShoppingCart();
+            cart.setUserId(userId);
+            cart.setUser(user);
+            cart = shoppingCartRepository.save(cart);
         }
 
         Books book = bookRepository.findById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Book not found with ID: " + bookId));
 
-        // Always add a new entry (even if duplicate)
         ShoppingCartItem newItem = new ShoppingCartItem(cart, book);
         cart.addCartItem(newItem);
         shoppingCartItemRepository.save(newItem);
@@ -63,7 +72,6 @@ public class ShoppingCartService {
             throw new IllegalArgumentException("Cart not found for user: " + userId);
         }
 
-        // Remove one instance of this book (if multiple exist)
         ShoppingCartItem itemToRemove = cart.getCartItems().stream()
                 .filter(item -> item.getBook().getBookId() == bookId)
                 .findFirst()

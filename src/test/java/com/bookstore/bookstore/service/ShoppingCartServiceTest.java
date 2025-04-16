@@ -3,9 +3,11 @@ package com.bookstore.bookstore.service;
 import com.bookstore.bookstore.model.Books;
 import com.bookstore.bookstore.model.ShoppingCart;
 import com.bookstore.bookstore.model.ShoppingCartItem;
+import com.bookstore.bookstore.model.User;
 import com.bookstore.bookstore.repository.BookRepository;
 import com.bookstore.bookstore.repository.ShoppingCartItemRepository;
 import com.bookstore.bookstore.repository.ShoppingCartRepository;
+import com.bookstore.bookstore.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,6 +33,9 @@ public class ShoppingCartServiceTest {
 
     @Mock
     private ShoppingCartItemRepository shoppingCartItemRepository;
+
+    @Mock
+    private UserRepository userRepository;
 
     @InjectMocks
     private ShoppingCartService shoppingCartService;
@@ -86,15 +91,15 @@ public class ShoppingCartServiceTest {
 
     @Test
     void addBookToCart_shouldAllowDuplicateBooks() {
-        Books duplicateBook = cartItems.get(0).getBook(); // Same book already in cart
+        Books duplicateBook = cartItems.get(0).getBook(); // same book already in cart
 
         when(shoppingCartRepository.findByUserId(1L)).thenReturn(cart);
         when(bookRepository.findById(1L)).thenReturn(Optional.of(duplicateBook));
 
-        shoppingCartService.addBookToCart(1L, 1L); // Add same book again
+        shoppingCartService.addBookToCart(1L, 1L);
 
         verify(shoppingCartItemRepository, times(1)).save(any(ShoppingCartItem.class));
-        assertEquals(3, cart.getCartItems().size()); // original 2 + 1 duplicate
+        assertEquals(3, cart.getCartItems().size());
     }
 
     @Test
@@ -127,13 +132,26 @@ public class ShoppingCartServiceTest {
     }
 
     @Test
-    void addBookToCart_cartNotFound_shouldThrowError() {
+    void addBookToCart_cartNotFound_shouldCreateCartAndAddBook() {
+        Books newBook = new Books();
+        newBook.setBookId(3L);
+        newBook.setPrice(12.5);
+
+        User user = new User();
+        user.setUserId(1L);
+        user.setUsername("testuser");
+        user.setPassword("testpass");
+
         when(shoppingCartRepository.findByUserId(1L)).thenReturn(null);
+        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        when(bookRepository.findById(3L)).thenReturn(Optional.of(newBook));
+        when(shoppingCartRepository.save(any(ShoppingCart.class)))
+                .thenAnswer(invocation -> invocation.getArgument(0)); // return the cart passed to save
 
-        assertThrows(IllegalArgumentException.class, () ->
-                shoppingCartService.addBookToCart(1L, 3L));
+        shoppingCartService.addBookToCart(1L, 3L);
 
-        verify(shoppingCartItemRepository, times(0)).save(any());
+        verify(shoppingCartRepository, times(1)).save(any(ShoppingCart.class));
+        verify(shoppingCartItemRepository, times(1)).save(any(ShoppingCartItem.class));
     }
 
     @Test
